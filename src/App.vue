@@ -1,13 +1,12 @@
 <template>
     <div id="app">
-        <div>
-            <div><img src="" id="imagem"></div>
-             <input type="text" class="input" >
-             <button class="buttonPlay" @click="play"> Jogar </button>
+        <div id="esquerdo">
+
+            <input type="text" class="input" >
+            <button class="buttonPlay" @click="play"> Jogar </button>
             
             <p id="palavra"> {{ palavra }} </p>
            
-        </div>
         <br>
         <span>
         <Button label="A" @onClick="letra"></Button>
@@ -44,9 +43,16 @@
         
         <p>{{ nome }}</p>
 
-        <p id="resultado" > {{ result }} </p>
 
         <button class="buttonNewPlay" @click="newPlay"> Novo jogo </button>
+        </div>
+
+        <div id="direito">
+            Oi
+            <p id="resultado" > {{ result }} </p>
+            <div id="imagem"> {{imagem}} </div>
+            
+        </div>
         
   </div>
 </template>
@@ -62,7 +68,8 @@ export default {
             nome: [],
             palavra: '',
             result: '',
-            contador: 0
+            contador: 0,
+            imagem: './static/tronco.jpg'
         }
     },
     methods: {
@@ -82,7 +89,7 @@ export default {
             }
 
             if (this.nome.length === this.palavra.length){
-                document.querySelector('#resultado').style.backgroundColor = 'rgb(97, 97, 247)'
+                document.querySelector('#direito').style.backgroundColor = 'rgb(97, 97, 247)'
                 this.result = "Parabéns, você acertou!!"
             }
         },
@@ -95,11 +102,13 @@ export default {
             this.nome = []
             this.palavra = ''
             this.result = ''
-            document.querySelector('#resultado').style.backgroundColor = ''
+            this.contador = 0
+            document.querySelector('#direito').style.backgroundColor = 'rgb(185, 167, 167)'
         },
         changeImage() {
             if (this.contador == 1) {
-                document.querySelector("#imagem").src = './assets/1.png'
+                console.log('trocar imagem')
+                this.imagem = './assets/3.png'
             }
         }
     }
@@ -112,11 +121,25 @@ body {
 }
 
 #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#esquerdo {
     display: flex;
+    height: 100vh;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#direito {
+    display: flex;
     height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(185, 167, 167);
 }
 
 #app span {
@@ -131,6 +154,7 @@ body {
 .input {
     height: 30px;
     width: 300px;
+    margin-bottom: 10px;
 }
 
 .buttonPlay {
@@ -150,13 +174,11 @@ body {
 }
 
 #resultado {
-    font-size: 1.2rem;
-    height: 20px;
-    width: 200px;
+    font-size: 1.5rem;
     color: #fff;  
-    padding: 5px;
-    padding-top: 15px;
     text-align: center;
 }
+
+
 
 </style>
