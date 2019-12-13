@@ -1,184 +1,211 @@
 <template>
-    <div id="app">
-        <div id="esquerdo">
+  <div id="app">
+    <div id="esquerdo">
+      <input type="text" class="input" />
+      <button class="buttonPlay" @click="play">Jogar</button>
 
-            <input type="text" class="input" >
-            <button class="buttonPlay" @click="play"> Jogar </button>
-            
-            <p id="palavra"> {{ palavra }} </p>
-           
-        <br>
-        <span>
+      <p id="palavra">{{ palavra }}</p>
+
+      <span>
         <Button label="A" @onClick="letra"></Button>
         <Button label="B" @onClick="letra"></Button>
         <Button label="C" @onClick="letra"></Button>
         <Button label="D" @onClick="letra"></Button>
         <Button label="E" @onClick="letra"></Button>
         <Button label="F" @onClick="letra"></Button>
-        </span> <span>
+      </span>
+      <span>
         <Button label="G" @onClick="letra"></Button>
         <Button label="H" @onClick="letra"></Button>
         <Button label="I" @onClick="letra"></Button>
         <Button label="J" @onClick="letra"></Button>
         <Button label="K" @onClick="letra"></Button>
         <Button label="L" @onClick="letra"></Button>
-        </span> <span>
+      </span>
+      <span>
         <Button label="M" @onClick="letra"></Button>
         <Button label="N" @onClick="letra"></Button>
         <Button label="O" @onClick="letra"></Button>
         <Button label="P" @onClick="letra"></Button>
         <Button label="Q" @onClick="letra"></Button>
         <Button label="R" @onClick="letra"></Button>
-        </span> <span>
+      </span>
+      <span>
         <Button label="S" @onClick="letra"></Button>
         <Button label="T" @onClick="letra"></Button>
         <Button label="U" @onClick="letra"></Button>
         <Button label="V" @onClick="letra"></Button>
         <Button label="X" @onClick="letra"></Button>
         <Button label="W" @onClick="letra"></Button>
-        </span> <span>
+      </span>
+      <span>
         <Button label="Y" @onClick="letra"></Button>
         <Button label="Z" @onClick="letra"></Button>
-        </span>
-        
-        <p>{{ nome }}</p>
+      </span>
 
+      <p>{{ nome }}</p>
 
-        <button class="buttonNewPlay" @click="newPlay"> Novo jogo </button>
-        </div>
+      <button class="buttonNewPlay" @click="newPlay">Novo jogo</button>
+    </div>
 
-        <div id="direito">
-            Oi
-            <p id="resultado" > {{ result }} </p>
-            <div id="imagem"> {{imagem}} </div>
-            
-        </div>
-        
+    <div id="direito">
+      <p id="resultado">{{ result }}</p>
+      <img :src="imagem" id="teste" />
+    </div>
   </div>
 </template>
 
 <script>
-import Button from './components/Button'
+import Button from "./components/Button";
+import Cabeca from "./assets/imgs/cabeca.png";
+import Tronco from "./assets/imgs/tronco.png";
+import BracoE from "./assets/imgs/bracoE.png";
+import BracoD from "./assets/imgs/bracoD.png";
+import PernaD from "./assets/imgs/pernaD.png";
+import PernaE from "./assets/imgs/pernaE.png";
+import Rosto from "./assets/imgs/rosto.png";
+import Sound from "./assets/sounds/coffee.mp3";
 
 export default {
-    components: { Button },
+  components: { Button },
 
-    data: function(){
-        return {
-            nome: [],
-            palavra: '',
-            result: '',
-            contador: 0,
-            imagem: './static/tronco.jpg'
-        }
+  data: function() {
+    return {
+      nome: [],
+      palavra: "",
+      result: "",
+      contador: 0,
+      imagem: "",
+      sound: Sound
+    };
+  },
+  methods: {
+    letra(n) {
+      if (n === this.palavra) {
+        var indice = this.palavra.indexOf(n);
+        this.nome.splice(indice, 0, n);
+      }
+      if (n !== this.palavra) {
+        this.contador++;
+        console.log("Contador " + this.contador);
+      }
+
+      if (this.contador != 0) {
+        this.changeImage();
+      }
+
+      if (this.nome.length === this.palavra.length) {
+        document.querySelector("#direito").style.backgroundColor =
+          "rgb(97, 97, 247)";
+        this.result = "Parabéns, você acertou!!";
+        this.sound.play();
+      }
     },
-    methods: {
-        letra(n) {
-            
-            if (n === this.palavra) {
-                var indice = this.palavra.indexOf(n)
-                this.nome.splice(indice, 0, n)
-            } 
-            if (n !== this.palavra){
-                this.contador++
-                console.log('Contador ' + this.contador)
-            }             
-
-            if (this.contador != 0) {
-                this.changeImage()
-            }
-
-            if (this.nome.length === this.palavra.length){
-                document.querySelector('#direito').style.backgroundColor = 'rgb(97, 97, 247)'
-                this.result = "Parabéns, você acertou!!"
-            }
-        },
-        play() {
-            var word = document.querySelector('.input').value         
-            document.querySelector('.input').value = ""
-            this.palavra = word
-        },
-        newPlay() {
-            this.nome = []
-            this.palavra = ''
-            this.result = ''
-            this.contador = 0
-            document.querySelector('#direito').style.backgroundColor = 'rgb(185, 167, 167)'
-        },
-        changeImage() {
-            if (this.contador == 1) {
-                console.log('trocar imagem')
-                this.imagem = './assets/3.png'
-            }
-        }
+    play() {
+      var word = document.querySelector(".input").value;
+      document.querySelector(".input").value = "";
+      this.palavra = word;
+    },
+    newPlay() {
+      this.nome = [];
+      this.palavra = "";
+      this.result = "";
+      this.contador = 0;
+      this.imagem = "";
+      document.querySelector("#direito").style.backgroundColor =
+        "rgb(185, 167, 167)";
+    },
+    changeImage() {
+      if (this.contador == 1) {
+        this.imagem = Cabeca;
+      }
+      if (this.contador == 2) {
+        this.imagem = Tronco;
+      }
+      if (this.contador == 3) {
+        this.imagem = PernaE;
+      }
+      if (this.contador == 4) {
+        this.imagem = PernaD;
+      }
+      if (this.contador == 5) {
+        this.imagem = BracoE;
+      }
+      if (this.contador == 6) {
+        this.imagem = BracoD;
+      }
+      if (this.contador == 7) {
+        this.imagem = Rosto;
+        document.querySelector("#direito").style.backgroundColor =
+          "rgb(255, 24, 50)";
+        this.result = "Você perdeu! Tente novamente.";
+      }
     }
-}
+  }
+};
 </script>
 
 <style>
 body {
-    background: rgb(177, 118, 96);
+  background: rgb(177, 118, 96);
 }
 
 #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 #esquerdo {
-    display: flex;
-    height: 100vh;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #direito {
-    display: flex;
-    height: 100vh;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(185, 167, 167);
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(185, 167, 167);
 }
 
 #app span {
-    margin: 5px;
-    margin-right: 5px;
+  margin: 5px;
+  margin-right: 5px;
 }
 
 #palavra {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .input {
-    height: 30px;
-    width: 300px;
-    margin-bottom: 10px;
+  height: 30px;
+  width: 300px;
+  margin-bottom: 10px;
 }
 
 .buttonPlay {
-    height: 35px;
-    width: 80px;
-    background-color: rgb(185, 167, 167);
-    font-size: 1.2rem;
-    margin-left: 10px;
+  height: 35px;
+  width: 80px;
+  background-color: rgb(185, 167, 167);
+  font-size: 1.2rem;
+  margin-left: 10px;
 }
 
 .buttonNewPlay {
-    height: 35px;
-    width: 200px;
-    background-color: rgb(185, 167, 167);
-    font-size: 1.2rem;
-    margin-left: 10px;
+  height: 35px;
+  width: 200px;
+  background-color: rgb(185, 167, 167);
+  font-size: 1.2rem;
+  margin-left: 10px;
 }
 
 #resultado {
-    font-size: 1.5rem;
-    color: #fff;  
-    text-align: center;
+  font-size: 1.5rem;
+  color: #fff;
+  text-align: center;
 }
-
-
-
 </style>
