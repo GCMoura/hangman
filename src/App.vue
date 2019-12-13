@@ -81,16 +81,30 @@ export default {
   },
   methods: {
     letra(n) {
-      if (n === this.palavra) {
-        var indice = this.palavra.indexOf(n);
-        this.nome.splice(indice, 0, n);
-      }
-      if (n !== this.palavra) {
-        this.contador++;
-        console.log("Contador " + this.contador);
+
+      // for (let i in this.palavra){
+      //   if (n === this.palavra[i]) {
+      //     var indice = this.palavra.indexOf(n);
+      //     this.nome.splice(indice, 0, n);
+      //     this.palavra.replace(this.palavra[i], )
+      //     console.log(this.nome)
+      //     console.log(this.palavra)
+      //   } 
+      // }
+
+      for (let i in this.palavra){
+        console.log(this.palavra[i])
       }
 
-      if (this.contador != 0) {
+      if (n in this.palavra){
+        console.log('tem')
+      }
+     
+
+      //console.log("Contador " + this.contador);
+      //console.log('Tamanho dos erros: ' + this.erro.size)
+
+      if (this.contador !== 0) {
         this.changeImage();
       }
 
@@ -98,13 +112,15 @@ export default {
         document.querySelector("#direito").style.backgroundColor =
           "rgb(97, 97, 247)";
         this.result = "Parabéns, você acertou!!";
-        this.sound.play();
+        //this.sound.play();
       }
     },
     play() {
-      var word = document.querySelector(".input").value;
+      var word = document.querySelector(".input").value.split('');
       document.querySelector(".input").value = "";
-      this.palavra = word;
+      this.palavra = word
+  
+
     },
     newPlay() {
       this.nome = [];
