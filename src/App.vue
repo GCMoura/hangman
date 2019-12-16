@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <div id="esquerdo">
-      <input type="text" class="input" />
-      <button class="buttonPlay" @click="play">Jogar</button>
+      <input type="text" class="input" placeholder="PALAVRA" />
+      <input type="text" class="input" id="dicaInput" placeholder="DICA" />
+
+      <ButtonPlay @onClick="play" />
 
       <p id="palavra">{{ palavra }}</p>
 
@@ -43,93 +45,110 @@
         <Button label="Z" @onClick="letra"></Button>
       </span>
 
-      <p>{{ nome }}</p>
-
-      <button class="buttonNewPlay" @click="newPlay">Novo jogo</button>
+      <ButtonNewPlay @onClick="newPlay" />
     </div>
 
     <div id="direito">
+      <p id="montagem">{{ nome }}</p>
       <p id="resultado">{{ result }}</p>
-      <img :src="imagem" id="teste" />
+      <img :src="imagem" id="imagem" />
+      <audio id="soundAcerto" src="./assets/sounds/acertou.mp3"></audio>
+      <audio id="soundErro" src="./assets/sounds/errou.mp3"></audio>
+      <audio id="soundVitoria" src="./assets/sounds/vitoria.mp3"></audio>
+      <audio id="soundDerrota" src="./assets/sounds/derrota.mp3"></audio>
     </div>
   </div>
 </template>
 
 <script>
 import Button from "./components/Button";
+import ButtonPlay from "./components/ButtonPlay";
+import ButtonNewPlay from "./components/ButtonNewPlay";
 import Cabeca from "./assets/imgs/cabeca.png";
 import Tronco from "./assets/imgs/tronco.png";
 import BracoE from "./assets/imgs/bracoE.png";
 import BracoD from "./assets/imgs/bracoD.png";
 import PernaD from "./assets/imgs/pernaD.png";
 import PernaE from "./assets/imgs/pernaE.png";
-import Rosto from "./assets/imgs/rosto.png";
-import Sound from "./assets/sounds/coffee.mp3";
+import Lose from "./assets/imgs/rosto.png";
+import Win from "./assets/imgs/win.png";
 
 export default {
-  components: { Button },
+  components: { Button, ButtonPlay, ButtonNewPlay },
 
   data: function() {
     return {
+      acertos: 0,
       nome: [],
       palavra: "",
       result: "",
       contador: 0,
       imagem: "",
-      sound: Sound
+      dicas: ""
     };
   },
   methods: {
     letra(n) {
+      let indice = this.palavra.indexOf(n);
 
-      // for (let i in this.palavra){
-      //   if (n === this.palavra[i]) {
-      //     var indice = this.palavra.indexOf(n);
-      //     this.nome.splice(indice, 0, n);
-      //     this.palavra.replace(this.palavra[i], )
-      //     console.log(this.nome)
-      //     console.log(this.palavra)
-      //   } 
-      // }
-
-      for (let i in this.palavra){
-        console.log(this.palavra[i])
+      if (indice === -1) {
+        this.contador++;
+        document.querySelector("#soundErro").play();
+      } else {
+        while (indice != -1) {
+          this.nome.splice(indice, 1, n);
+          document.querySelector("#soundAcerto").play();
+          this.acertos++;
+          this.verificar();
+          indice = this.palavra.indexOf(n, indice + 1);
+        }
       }
-
-      if (n in this.palavra){
-        console.log('tem')
-      }
-     
-
-      //console.log("Contador " + this.contador);
-      //console.log('Tamanho dos erros: ' + this.erro.size)
 
       if (this.contador !== 0) {
         this.changeImage();
       }
-
-      if (this.nome.length === this.palavra.length) {
+      if (this.acertos == 3) {
+        this.result = this.dicas;
+      }
+    },
+    verificar() {
+      let palavra = this.palavra.join(",");
+      let nome = this.nome.join(",");
+      if (nome == palavra) {
         document.querySelector("#direito").style.backgroundColor =
           "rgb(97, 97, 247)";
         this.result = "Parabéns, você acertou!!";
-        //this.sound.play();
+        document.querySelector("#soundVitoria").play();
+        this.contador = 0;
+        this.imagem = Win;
       }
     },
     play() {
-      var word = document.querySelector(".input").value.split('');
+      var word = document.querySelector(".input").value.split("");
       document.querySelector(".input").value = "";
-      this.palavra = word
-  
-
+      document.querySelector(
+        "#palavra"
+      ).innerHTML = `A palavra tem ${word.length} letras`;
+      this.palavra = word;
+      for (let i in this.palavra) {
+        let troca = this.palavra[i].replace(this.palavra[i], "__");
+        this.nome.push(troca);
+      }
+      this.dicas = document.querySelector("#dicaInput").value;
+      document.querySelector("#dicaInput").value = "";
     },
     newPlay() {
       this.nome = [];
       this.palavra = "";
       this.result = "";
       this.contador = 0;
+      this.acertos = 0;
       this.imagem = "";
+      document.querySelector("#palavra").innerHTML = "";
       document.querySelector("#direito").style.backgroundColor =
         "rgb(185, 167, 167)";
+      document.querySelector("#soundVitoria").pause();
+      document.querySelector("#soundDerrota").pause();
     },
     changeImage() {
       if (this.contador == 1) {
@@ -151,10 +170,12 @@ export default {
         this.imagem = BracoD;
       }
       if (this.contador == 7) {
-        this.imagem = Rosto;
+        this.imagem = Lose;
         document.querySelector("#direito").style.backgroundColor =
           "rgb(255, 24, 50)";
         this.result = "Você perdeu! Tente novamente.";
+        document.querySelector("#soundDerrota").play();
+        this.nome = this.palavra;
       }
     }
   }
@@ -203,25 +224,14 @@ body {
   margin-bottom: 10px;
 }
 
-.buttonPlay {
-  height: 35px;
-  width: 80px;
-  background-color: rgb(185, 167, 167);
-  font-size: 1.2rem;
-  margin-left: 10px;
-}
-
-.buttonNewPlay {
-  height: 35px;
-  width: 200px;
-  background-color: rgb(185, 167, 167);
-  font-size: 1.2rem;
-  margin-left: 10px;
-}
-
 #resultado {
   font-size: 1.5rem;
   color: #fff;
   text-align: center;
+}
+
+#montagem {
+  text-align: center;
+  font-size: 1.5rem;
 }
 </style>
