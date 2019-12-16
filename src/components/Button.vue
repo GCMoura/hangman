@@ -7,7 +7,7 @@
 <script>
 export default {
     props: {
-        label: {}
+        label: {}        
     }
 }
 </script>

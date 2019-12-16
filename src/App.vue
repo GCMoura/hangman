@@ -8,41 +8,41 @@
 
       <p id="palavra">{{ palavra }}</p>
 
-      <span>
-        <Button label="A" @onClick="letra"></Button>
-        <Button label="B" @onClick="letra"></Button>
-        <Button label="C" @onClick="letra"></Button>
-        <Button label="D" @onClick="letra"></Button>
-        <Button label="E" @onClick="letra"></Button>
-        <Button label="F" @onClick="letra"></Button>
+      <span class="buttons">
+        <Button id="A" label="A" @onClick="letra"></Button>
+        <Button id="B" label="B" @onClick="letra"></Button>
+        <Button id="C" label="C" @onClick="letra"></Button>
+        <Button id="D" label="D" @onClick="letra"></Button>
+        <Button id="E" label="E" @onClick="letra"></Button>
+        <Button id="F" label="F" @onClick="letra"></Button>
       </span>
-      <span>
-        <Button label="G" @onClick="letra"></Button>
-        <Button label="H" @onClick="letra"></Button>
-        <Button label="I" @onClick="letra"></Button>
-        <Button label="J" @onClick="letra"></Button>
-        <Button label="K" @onClick="letra"></Button>
-        <Button label="L" @onClick="letra"></Button>
+      <span class="buttons">
+        <Button id="G" label="G" @onClick="letra"></Button>
+        <Button id="H" label="H" @onClick="letra"></Button>
+        <Button id="I" label="I" @onClick="letra"></Button>
+        <Button id="J" label="J" @onClick="letra"></Button>
+        <Button id="K" label="K" @onClick="letra"></Button>
+        <Button id="L" label="L" @onClick="letra"></Button>
       </span>
-      <span>
-        <Button label="M" @onClick="letra"></Button>
-        <Button label="N" @onClick="letra"></Button>
-        <Button label="O" @onClick="letra"></Button>
-        <Button label="P" @onClick="letra"></Button>
-        <Button label="Q" @onClick="letra"></Button>
-        <Button label="R" @onClick="letra"></Button>
+      <span class="buttons">
+        <Button id="M" label="M" @onClick="letra"></Button>
+        <Button id="N" label="N" @onClick="letra"></Button>
+        <Button id="O" label="O" @onClick="letra"></Button>
+        <Button id="P" label="P" @onClick="letra"></Button>
+        <Button id="Q" label="Q" @onClick="letra"></Button>
+        <Button id="R" label="R" @onClick="letra"></Button>
       </span>
-      <span>
-        <Button label="S" @onClick="letra"></Button>
-        <Button label="T" @onClick="letra"></Button>
-        <Button label="U" @onClick="letra"></Button>
-        <Button label="V" @onClick="letra"></Button>
-        <Button label="X" @onClick="letra"></Button>
-        <Button label="W" @onClick="letra"></Button>
+      <span class="buttons">
+        <Button id="S" label="S" @onClick="letra"></Button>
+        <Button id="T" label="T" @onClick="letra"></Button>
+        <Button id="U" label="U" @onClick="letra"></Button>
+        <Button id="V" label="V" @onClick="letra"></Button>
+        <Button id="X" label="X" @onClick="letra"></Button>
+        <Button id="W" label="W" @onClick="letra"></Button>
       </span>
-      <span>
-        <Button label="Y" @onClick="letra"></Button>
-        <Button label="Z" @onClick="letra"></Button>
+      <span class="buttons">
+        <Button id="Y" label="Y" @onClick="letra"></Button>
+        <Button id="Z" label="Z" @onClick="letra"></Button>
       </span>
 
       <ButtonNewPlay @onClick="newPlay" />
@@ -84,7 +84,12 @@ export default {
       result: "",
       contador: 0,
       imagem: "",
+<<<<<<< HEAD
+      dicas: "",
+      soundErro: document.querySelector("#soundErro")
+=======
       dicas: ""
+>>>>>>> 283a6c830ceba19de66338736e249802cba0978f
     };
   },
   methods: {
@@ -93,11 +98,24 @@ export default {
 
       if (indice === -1) {
         this.contador++;
+<<<<<<< HEAD
+        this.soundErro.play();
+        document.querySelector("#" + n).style.backgroundColor = "rgb(255, 24, 50)"
+        document.querySelector("#" + n).style.color = "#fff"
+        document.querySelector("#" + n).disabled = true
+=======
         document.querySelector("#soundErro").play();
+>>>>>>> 283a6c830ceba19de66338736e249802cba0978f
       } else {
         while (indice != -1) {
           this.nome.splice(indice, 1, n);
           document.querySelector("#soundAcerto").play();
+<<<<<<< HEAD
+          document.querySelector("#" + n).style.backgroundColor = "rgb(97, 97, 247)"
+          document.querySelector("#" + n).style.color = "#fff"
+          document.querySelector("#" + n).disabled = true
+=======
+>>>>>>> 283a6c830ceba19de66338736e249802cba0978f
           this.acertos++;
           this.verificar();
           indice = this.palavra.indexOf(n, indice + 1);
@@ -138,6 +156,24 @@ export default {
       document.querySelector("#dicaInput").value = "";
     },
     newPlay() {
+<<<<<<< HEAD
+
+      document.location.reload(true);
+
+
+      // this.nome = [];
+      // this.palavra = "";
+      // this.result = "";
+      // this.contador = 0;
+      // this.acertos = 0;
+      // this.imagem = "";
+      // document.querySelector("#palavra").innerHTML = "";
+      // document.querySelector("#direito").style.backgroundColor =
+      //   "rgb(185, 167, 167)";
+
+      // document.querySelector("#soundVitoria").pause();
+      // document.querySelector("#soundDerrota").pause();
+=======
       this.nome = [];
       this.palavra = "";
       this.result = "";
@@ -149,6 +185,7 @@ export default {
         "rgb(185, 167, 167)";
       document.querySelector("#soundVitoria").pause();
       document.querySelector("#soundDerrota").pause();
+>>>>>>> 283a6c830ceba19de66338736e249802cba0978f
     },
     changeImage() {
       if (this.contador == 1) {
