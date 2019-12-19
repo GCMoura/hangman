@@ -1,61 +1,61 @@
 <template>
   <div id="app">
-    <div id="esquerdo">
+    <div id="left">
       <input type="text" class="input" placeholder="PALAVRA" />
-      <input type="text" class="input" id="dicaInput" placeholder="DICA" />
+      <input type="text" class="input" id="tipInput" placeholder="DICA" />
 
       <ButtonPlay @onClick="play" />
 
-      <p id="palavra">{{ palavra }}</p>
+      <p id="choseWord">{{ choseWord }}</p>
 
-      <span class="buttons">
-        <Button id="A" label="A" @onClick="letra"></Button>
-        <Button id="B" label="B" @onClick="letra"></Button>
-        <Button id="C" label="C" @onClick="letra"></Button>
-        <Button id="D" label="D" @onClick="letra"></Button>
-        <Button id="E" label="E" @onClick="letra"></Button>
-        <Button id="F" label="F" @onClick="letra"></Button>
+      <span>
+        <Button id="A" label="A" @onClick="letterPlay"></Button>
+        <Button id="B" label="B" @onClick="letterPlay"></Button>
+        <Button id="C" label="C" @onClick="letterPlay"></Button>
+        <Button id="D" label="D" @onClick="letterPlay"></Button>
+        <Button id="E" label="E" @onClick="letterPlay"></Button>
+        <Button id="F" label="F" @onClick="letterPlay"></Button>
       </span>
-      <span class="buttons">
-        <Button id="G" label="G" @onClick="letra"></Button>
-        <Button id="H" label="H" @onClick="letra"></Button>
-        <Button id="I" label="I" @onClick="letra"></Button>
-        <Button id="J" label="J" @onClick="letra"></Button>
-        <Button id="K" label="K" @onClick="letra"></Button>
-        <Button id="L" label="L" @onClick="letra"></Button>
+      <span>
+        <Button id="G" label="G" @onClick="letterPlay"></Button>
+        <Button id="H" label="H" @onClick="letterPlay"></Button>
+        <Button id="I" label="I" @onClick="letterPlay"></Button>
+        <Button id="J" label="J" @onClick="letterPlay"></Button>
+        <Button id="K" label="K" @onClick="letterPlay"></Button>
+        <Button id="L" label="L" @onClick="letterPlay"></Button>
       </span>
-      <span class="buttons">
-        <Button id="M" label="M" @onClick="letra"></Button>
-        <Button id="N" label="N" @onClick="letra"></Button>
-        <Button id="O" label="O" @onClick="letra"></Button>
-        <Button id="P" label="P" @onClick="letra"></Button>
-        <Button id="Q" label="Q" @onClick="letra"></Button>
-        <Button id="R" label="R" @onClick="letra"></Button>
+      <span>
+        <Button id="M" label="M" @onClick="letterPlay"></Button>
+        <Button id="N" label="N" @onClick="letterPlay"></Button>
+        <Button id="O" label="O" @onClick="letterPlay"></Button>
+        <Button id="P" label="P" @onClick="letterPlay"></Button>
+        <Button id="Q" label="Q" @onClick="letterPlay"></Button>
+        <Button id="R" label="R" @onClick="letterPlay"></Button>
       </span>
-      <span class="buttons">
-        <Button id="S" label="S" @onClick="letra"></Button>
-        <Button id="T" label="T" @onClick="letra"></Button>
-        <Button id="U" label="U" @onClick="letra"></Button>
-        <Button id="V" label="V" @onClick="letra"></Button>
-        <Button id="X" label="X" @onClick="letra"></Button>
-        <Button id="W" label="W" @onClick="letra"></Button>
+      <span>
+        <Button id="S" label="S" @onClick="letterPlay"></Button>
+        <Button id="T" label="T" @onClick="letterPlay"></Button>
+        <Button id="U" label="U" @onClick="letterPlay"></Button>
+        <Button id="V" label="V" @onClick="letterPlay"></Button>
+        <Button id="X" label="X" @onClick="letterPlay"></Button>
+        <Button id="W" label="W" @onClick="letterPlay"></Button>
       </span>
-      <span class="buttons">
-        <Button id="Y" label="Y" @onClick="letra"></Button>
-        <Button id="Z" label="Z" @onClick="letra"></Button>
+      <span>
+        <Button id="Y" label="Y" @onClick="letterPlay"></Button>
+        <Button id="Z" label="Z" @onClick="letterPlay"></Button>
       </span>
 
       <ButtonNewPlay @onClick="newPlay" />
     </div>
 
-    <div id="direito">
-      <p id="montagem">{{ nome }}</p>
-      <p id="resultado">{{ result }}</p>
-      <img :src="imagem" id="imagem" />
-      <audio id="soundAcerto" src="./assets/sounds/acertou.mp3"></audio>
-      <audio id="soundErro" src="./assets/sounds/errou.mp3"></audio>
-      <audio id="soundVitoria" src="./assets/sounds/vitoria.mp3"></audio>
-      <audio id="soundDerrota" src="./assets/sounds/derrota.mp3"></audio>
+    <div id="right">
+      <p id="separateLetters">{{ name }}</p>
+      <p id="result">{{ result }}</p>
+      <img :src="image" id="image" />
+      <audio id="hitSound" src="./assets/sounds/acertou.mp3"></audio>
+      <audio id="errorSound" src="./assets/sounds/errou.mp3"></audio>
+      <audio id="victorySound" src="./assets/sounds/vitoria.mp3"></audio>
+      <audio id="defeatSound" src="./assets/sounds/derrota.mp3"></audio>
     </div>
   </div>
 </template>
@@ -64,155 +64,123 @@
 import Button from "./components/Button";
 import ButtonPlay from "./components/ButtonPlay";
 import ButtonNewPlay from "./components/ButtonNewPlay";
-import Cabeca from "./assets/imgs/cabeca.png";
-import Tronco from "./assets/imgs/tronco.png";
-import BracoE from "./assets/imgs/bracoE.png";
-import BracoD from "./assets/imgs/bracoD.png";
-import PernaD from "./assets/imgs/pernaD.png";
-import PernaE from "./assets/imgs/pernaE.png";
-import Lose from "./assets/imgs/rosto.png";
-import Win from "./assets/imgs/win.png";
+
+import Hangman from './assets/imgs/hangman.png';
+import Head from "./assets/imgs/head.png";
+import Body from "./assets/imgs/body.png";
+import LeftArm from "./assets/imgs/leftArm.png";
+import RightArm from "./assets/imgs/rightArm.png";
+import RightLeg from "./assets/imgs/rightLeg.png";
+import LeftLeg from "./assets/imgs/leftLeg.png";
+import Defeat from "./assets/imgs/defeat.png";
+import Victory from "./assets/imgs/victory.png";
 
 export default {
   components: { Button, ButtonPlay, ButtonNewPlay },
 
   data: function() {
     return {
-      acertos: 0,
-      nome: [],
-      palavra: "",
+      hits: 0,
+      name: [],
+      choseWord: "",
       result: "",
-      contador: 0,
-      imagem: "",
-<<<<<<< HEAD
-      dicas: "",
-      soundErro: document.querySelector("#soundErro")
-=======
-      dicas: ""
->>>>>>> 283a6c830ceba19de66338736e249802cba0978f
+      counter: 0,
+      image: Hangman,
+      tips: "",
+      word: ""
     };
   },
   methods: {
-    letra(n) {
-      let indice = this.palavra.indexOf(n);
+    letterPlay(n) {
+      let index = this.choseWord.indexOf(n);
 
-      if (indice === -1) {
-        this.contador++;
-<<<<<<< HEAD
-        this.soundErro.play();
+      if (index === -1) {
+        this.counter++;
         document.querySelector("#" + n).style.backgroundColor = "rgb(255, 24, 50)"
         document.querySelector("#" + n).style.color = "#fff"
         document.querySelector("#" + n).disabled = true
-=======
-        document.querySelector("#soundErro").play();
->>>>>>> 283a6c830ceba19de66338736e249802cba0978f
+        document.querySelector("#errorSound").play()
       } else {
-        while (indice != -1) {
-          this.nome.splice(indice, 1, n);
-          document.querySelector("#soundAcerto").play();
-<<<<<<< HEAD
+        while (index != -1) {
+          this.name.splice(index, 1, n);
+          document.querySelector("#hitSound").play();
           document.querySelector("#" + n).style.backgroundColor = "rgb(97, 97, 247)"
           document.querySelector("#" + n).style.color = "#fff"
           document.querySelector("#" + n).disabled = true
-=======
->>>>>>> 283a6c830ceba19de66338736e249802cba0978f
-          this.acertos++;
-          this.verificar();
-          indice = this.palavra.indexOf(n, indice + 1);
+          this.hits++;
+          this.checkWord();
+          index = this.choseWord.indexOf(n, index + 1);
         }
       }
 
-      if (this.contador !== 0) {
+      if (this.counter !== 0) {
         this.changeImage();
       }
-      if (this.acertos == 3) {
-        this.result = this.dicas;
+      if (this.hits == 3) {
+        this.result = `A dica é: ${this.tips}`;
       }
+
+      
     },
-    verificar() {
-      let palavra = this.palavra.join(",");
-      let nome = this.nome.join(",");
-      if (nome == palavra) {
-        document.querySelector("#direito").style.backgroundColor =
-          "rgb(97, 97, 247)";
+    checkWord() {
+      let finalWord = this.choseWord.join(",");
+      let finalName = this.name.join(",");
+      if (finalName == finalWord) {
+        document.querySelector("#right").style.backgroundColor = "rgb(97, 97, 247)";
+        this.image = Victory;
+        document.querySelector("#hitSound").pause();
+        document.querySelector("#victorySound").play();
+        this.name = `A palavra é ${this.choseWord.join("")}`
         this.result = "Parabéns, você acertou!!";
-        document.querySelector("#soundVitoria").play();
-        this.contador = 0;
-        this.imagem = Win;
       }
     },
     play() {
-      var word = document.querySelector(".input").value.split("");
+      this.word = document.querySelector(".input").value.split("");
       document.querySelector(".input").value = "";
-      document.querySelector(
-        "#palavra"
-      ).innerHTML = `A palavra tem ${word.length} letras`;
-      this.palavra = word;
-      for (let i in this.palavra) {
-        let troca = this.palavra[i].replace(this.palavra[i], "__");
-        this.nome.push(troca);
+
+      this.tips = document.querySelector("#tipInput").value
+      document.querySelector("#tipInput").value = "";
+
+      document.querySelector("#choseWord").innerHTML = `A palavra tem ${this.word.length} letras`;
+
+      this.choseWord = this.word;
+      for (let i in this.choseWord) {
+        let change = this.choseWord[i].replace(this.choseWord[i], "__");
+        this.name.push(change);
       }
-      this.dicas = document.querySelector("#dicaInput").value;
-      document.querySelector("#dicaInput").value = "";
+      
     },
     newPlay() {
-<<<<<<< HEAD
 
       document.location.reload(true);
 
-
-      // this.nome = [];
-      // this.palavra = "";
-      // this.result = "";
-      // this.contador = 0;
-      // this.acertos = 0;
-      // this.imagem = "";
-      // document.querySelector("#palavra").innerHTML = "";
-      // document.querySelector("#direito").style.backgroundColor =
-      //   "rgb(185, 167, 167)";
-
-      // document.querySelector("#soundVitoria").pause();
-      // document.querySelector("#soundDerrota").pause();
-=======
-      this.nome = [];
-      this.palavra = "";
-      this.result = "";
-      this.contador = 0;
-      this.acertos = 0;
-      this.imagem = "";
-      document.querySelector("#palavra").innerHTML = "";
-      document.querySelector("#direito").style.backgroundColor =
-        "rgb(185, 167, 167)";
-      document.querySelector("#soundVitoria").pause();
-      document.querySelector("#soundDerrota").pause();
->>>>>>> 283a6c830ceba19de66338736e249802cba0978f
     },
     changeImage() {
-      if (this.contador == 1) {
-        this.imagem = Cabeca;
+      if (this.counter == 1) {
+        this.image = Head;
       }
-      if (this.contador == 2) {
-        this.imagem = Tronco;
+      if (this.counter == 2) {
+        this.image = Body;
       }
-      if (this.contador == 3) {
-        this.imagem = PernaE;
+      if (this.counter == 3) {
+        this.image = LeftLeg;
       }
-      if (this.contador == 4) {
-        this.imagem = PernaD;
+      if (this.counter == 4) {
+        this.image = RightLeg;
       }
-      if (this.contador == 5) {
-        this.imagem = BracoE;
+      if (this.counter == 5) {
+        this.image = LeftArm;
       }
-      if (this.contador == 6) {
-        this.imagem = BracoD;
+      if (this.counter == 6) {
+        this.image = RightArm;
       }
-      if (this.contador == 7) {
-        this.imagem = Lose;
-        document.querySelector("#direito").style.backgroundColor =
-          "rgb(255, 24, 50)";
+      if (this.counter == 7) {
+        this.image = Defeat;
+        document.querySelector("#right").style.backgroundColor = "rgb(255, 24, 50)";
         this.result = "Você perdeu! Tente novamente.";
-        document.querySelector("#soundDerrota").play();
-        this.nome = this.palavra;
+        document.querySelector("#errorSound").pause()
+        document.querySelector("#defeatSound").play();
+        this.name = `A palavra é ${this.choseWord.join("")}`
       }
     }
   }
@@ -229,7 +197,7 @@ body {
   grid-template-columns: 1fr 1fr;
 }
 
-#esquerdo {
+#left {
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -237,7 +205,7 @@ body {
   align-items: center;
 }
 
-#direito {
+#right {
   display: flex;
   height: 100vh;
   flex-direction: column;
@@ -251,7 +219,7 @@ body {
   margin-right: 5px;
 }
 
-#palavra {
+#choseWord {
   font-size: 1.5rem;
 }
 
@@ -261,14 +229,14 @@ body {
   margin-bottom: 10px;
 }
 
-#resultado {
-  font-size: 1.5rem;
+#result {
+  font-size: 2.5rem;
   color: #fff;
   text-align: center;
 }
 
-#montagem {
+#separateLetters {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
 }
 </style>
