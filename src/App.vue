@@ -43,6 +43,8 @@
       <span>
         <Button id="Y" label="Y" @onClick="letterPlay"></Button>
         <Button id="Z" label="Z" @onClick="letterPlay"></Button>
+        <Button id="Ç" label="Ç" @onClick="letterPlay"></Button>
+        <Button id="Ã" label="Ã" @onClick="letterPlay"></Button>
       </span>
 
       <ButtonNewPlay @onClick="newPlay" />
@@ -127,7 +129,7 @@ export default {
       let finalName = this.name.join(",");
       if (finalName == finalWord) {
         document.querySelector("#right").style.backgroundColor = "rgb(97, 97, 247)";
-        this.image = Victory;
+        document.querySelector("#image").src = Victory;
         document.querySelector("#hitSound").pause();
         document.querySelector("#victorySound").play();
         this.name = `A palavra é ${this.choseWord.join("")}`
